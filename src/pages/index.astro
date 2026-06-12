@@ -1,0 +1,181 @@
+---
+import Base from '../layouts/Base.astro';
+import { identity, links, projects, now, contact } from '../data/site';
+---
+
+<Base>
+  <div class="page w-full max-w-page mx-auto px-6 md:px-10 py-8">
+
+    <!-- ═══ TOPBAR ═══ -->
+    <div class="flex items-center justify-between pb-4 mb-8 border-b border-border">
+      <span class="text-text font-bold tracking-widest uppercase text-sm">
+        {identity.handle}
+      </span>
+      <span class="text-mid text-xs">
+        est. {identity.since} &nbsp;·&nbsp; {identity.status}
+      </span>
+    </div>
+
+
+    <!-- ═══ IDENTITY ═══ -->
+    <section class="mb-16">
+
+      <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-text uppercase mb-6 leading-none">
+        {identity.handle}
+      </h1>
+
+      <p class="text-mid text-sm mb-8 whitespace-pre-line leading-relaxed max-w-lg">
+        {identity.bio}
+      </p>
+
+      <!-- Links as inline text -->
+      <nav class="text-sm text-mid">
+        {links.map((link, i) => (
+          <span>
+            {link.flag ? (
+              <a href={link.href} target="_blank" rel="noopener"
+                class="hover:text-text transition-colors duration-100 inline-flex items-center gap-1">
+                <svg viewBox="0 0 18 12" width="16" height="11" xmlns="http://www.w3.org/2000/svg"
+                  style="display:inline; vertical-align:middle; opacity:0.75; border: 1px solid #333;">
+                  <rect width="18" height="6" fill="#005BBB"/>
+                  <rect y="6" width="18" height="6" fill="#FFD500"/>
+                </svg>
+                {link.label}
+              </a>
+            ) : (
+              <a href={link.href} target="_blank" rel="noopener"
+                class="hover:text-text transition-colors duration-100">
+                {link.label}
+              </a>
+            )}
+            {i < links.length - 1 && <span class="text-dim mx-2">·</span>}
+          </span>
+        ))}
+      </nav>
+
+    </section>
+
+
+    <hr class="mb-12" />
+
+
+    <!-- ═══ PROJECTS ═══ -->
+    <section class="mb-16">
+
+      <h2 class="text-xs tracking-[0.25em] uppercase text-mid mb-6">
+        [ PROJECTS ]
+      </h2>
+
+      <div class="flex flex-col gap-8">
+        {projects.map((project, i) => (
+          <div class="grid gap-1" style="grid-template-columns: 2ch 1fr">
+            <!-- Index -->
+            <span class="text-dim text-xs pt-[2px]">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+
+            <!-- Content -->
+            <div>
+              <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-1">
+                {project.href ? (
+                  <a href={project.href} target="_blank" rel="noopener"
+                    class="font-bold text-text uppercase text-sm tracking-wide hover:text-mid transition-colors duration-100">
+                    {project.name}
+                  </a>
+                ) : (
+                  <span class="font-bold text-dim uppercase text-sm tracking-wide">
+                    {project.name}
+                  </span>
+                )}
+                <span class="text-dim text-xs">
+                  {project.tags.join(' / ')}
+                </span>
+              </div>
+              {project.url && (
+                <div class="text-dim text-xs mb-1">{project.url}</div>
+              )}
+              <p class="text-mid text-sm leading-relaxed">
+                {project.desc}
+              </p>
+            </div>
+          </div>
+        ))}
+
+        <!-- Placeholder slot -->
+        <div class="grid gap-1" style="grid-template-columns: 2ch 1fr">
+          <span class="text-faint text-xs pt-[2px]">__</span>
+          <div>
+            <div class="font-bold text-faint uppercase text-sm tracking-wide mb-1">
+              ___________________
+            </div>
+            <p class="text-faint text-xs italic">placeholder — add your next project.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+
+    <hr class="mb-12" />
+
+
+    <!-- ═══ NOW ═══ -->
+    <section class="mb-16">
+
+      <h2 class="text-xs tracking-[0.25em] uppercase text-mid mb-6">
+        [ NOW ]
+      </h2>
+
+      <div class="flex flex-col gap-0">
+        {now.map((item) => (
+          <div class="grid text-sm py-2 border-b border-faint"
+               style="grid-template-columns: 100px 1fr">
+            <span class="text-dim uppercase text-xs tracking-wider pt-[2px]">
+              {item.label}
+            </span>
+            <span class="text-mid">
+              {item.value || <span class="text-faint italic">—</span>}
+            </span>
+          </div>
+        ))}
+      </div>
+
+    </section>
+
+
+    <hr class="mb-12" />
+
+
+    <!-- ═══ CONTACT ═══ -->
+    <section class="mb-16">
+
+      <h2 class="text-xs tracking-[0.25em] uppercase text-mid mb-6">
+        [ CONTACT ]
+      </h2>
+
+      <div class="flex flex-col gap-2">
+        {contact.lines.map((line) => (
+          <div class="grid text-sm" style="grid-template-columns: 100px 1fr">
+            <span class="text-dim uppercase text-xs tracking-wider pt-[2px]">
+              {line.label}
+            </span>
+            <a href={line.href} target="_blank" rel="noopener"
+               class="text-mid hover:text-text transition-colors duration-100">
+              {line.text}
+            </a>
+          </div>
+        ))}
+      </div>
+
+    </section>
+
+
+    <!-- ═══ FOOTER ═══ -->
+    <hr class="mb-6" />
+    <footer class="text-dim text-xs pb-8 flex justify-between">
+      <span>© {identity.since} {identity.handle}</span>
+      <span>shortbusmenace.xyz</span>
+    </footer>
+
+  </div>
+</Base>
